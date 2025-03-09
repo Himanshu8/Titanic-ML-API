@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic Survival Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Titanic Survival Prediction</h2>
+        
+        <label>Passenger Class:</label>
+        <select id="Pclass">
+            <option value="1">1st Class</option>
+            <option value="2">2nd Class</option>
+            <option value="3" selected>3rd Class</option>
+        </select>
+
+        <label>Sex:</label>
+        <select id="Sex">
+            <option value="1">Female</option>
+            <option value="0">Male</option>
+        </select>
+
+        <label>Age:</label>
+        <input type="number" id="Age" placeholder="Enter Age" min="1" max="100">
+
+        <label>Number of Siblings/Spouses:</label>
+        <input type="number" id="SibSp" placeholder="Enter SibSp" min="0">
+
+        <label>Number of Parents/Children:</label>
+        <input type="number" id="Parch" placeholder="Enter Parch" min="0">
+
+        <label>Fare:</label>
+        <input type="number" id="Fare" placeholder="Enter Fare Amount" min="0">
+
+        <button onclick="predict()">Predict</button>
+
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function predict() {
+            const data = {
+                Pclass: parseInt(document.getElementById("Pclass").value),
+                Sex: parseInt(document.getElementById("Sex").value),
+                Age: parseFloat(document.getElementById("Age").value),
+                SibSp: parseInt(document.getElementById("SibSp").value),
+                Parch: parseInt(document.getElementById("Parch").value),
+                Fare: parseFloat(document.getElementById("Fare").value)
+            };
+
+            fetch("http://127.0.0.1:5000/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Server returned an error: " + response.statusText);
+                }
+                return response.json();
+            })
+            .then(result => {
+                document.getElementById("result").innerText = 
+                    result.prediction === 1 ? "🟢 Survived" : "🔴 Did Not Survive";
+            })
+            .catch(error => {
+                document.getElementById("result").innerText = "Error: " + error.message;
+            });
+        }
+    </script>
+
+</body>
+</html>
+
