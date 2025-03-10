@@ -33,7 +33,7 @@ jobs:
       run: |
         docker login
         docker build -t himanshu8/titanic-ml-api:latest .
-        docker push himanshu8/titanic-ml-api:latest
+#        docker push himanshu8/titanic-ml-api:latest
 
     - name: Deploy Container (Optional)
       run: |
