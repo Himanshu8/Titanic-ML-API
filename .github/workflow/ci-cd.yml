@@ -37,4 +37,3 @@ jobs:
     - name: Deploy Container (Optional)
       run: |
         docker run -d -p 5000:5000 himanshu8/titanic-ml-api:latest
-
