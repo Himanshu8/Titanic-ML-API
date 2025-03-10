@@ -32,7 +32,8 @@ jobs:
     - name: Build and Push Docker Image
       run: |
         docker login
-        docker build -t himanshu8/titanic-ml-api:latest .
+        docker build -t himanshu4733/titanic-ml-api:latest .
+        docker push himanshu4733/titanic-ml-api:latest
 #        docker push himanshu8/titanic-ml-api:latest
 
     - name: Deploy Container (Optional)
