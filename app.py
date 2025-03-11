@@ -45,6 +45,7 @@ def predict():
         print("ERROR:", str(e))  # Print error in terminal
         return jsonify({"error": str(e)}), 500  # Return error message in response
 
-if __name__ == "__main__":
-    app.run(debug=True)
 
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
